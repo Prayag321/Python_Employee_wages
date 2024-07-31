@@ -51,15 +51,17 @@ def daily_wage():
   daily_wage = 0
 
   status = check_employee_status()
-  if status=="Full-time":
-    daily_wage = full_day_hour*wage_per_hour
-  if status=="Part-time":
-    daily_wage = part_day_hour*wage_per_hour
-  print("Daily wage is :",end=" ")
+  match status:
+    case "Full-time":
+      daily_wage = full_day_hour * wage_per_hour
+    case "Part-time":
+      daily_wage = part_day_hour * wage_per_hour
+    case _:
+      daily_wage = 0
   return daily_wage
 
 def main():
-  print(daily_wage())
+  print("Employee wage is : ",daily_wage())
 
 if __name__=="__main__":
   main()
