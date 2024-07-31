@@ -27,8 +27,31 @@ def check_employee_status():
   else:
     return "Present"
 
+def daily_wage():
+  """
+  Description:
+    This function calculat daily wage
+
+  Parameters:
+    None
+
+  Returns:
+    daily_wage(int):calculated daily wage by formula
+  """
+
+  wage_per_hour = 20
+  full_day_hour = 8
+  daily_wage = 0
+
+  if check_employee_status()=="Present":
+    daily_wage = full_day_hour*wage_per_hour
+
+  return daily_wage
+
+
+
 def main():
-  print("Employee is", check_employee_status())
+  print("Employee full time wage is :", daily_wage())
 
 if __name__=="__main__":
   main()
