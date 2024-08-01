@@ -8,12 +8,15 @@
 import random
 
 class EmployeeWage:
-  MAX_HOUR = 100
-  MAX_DAYS = 20
+  # MAX_HOUR = 100
+  # MAX_DAYS = 20
   FULL_TIME_HOUR = 8
   PART_TIME_HOUR = 4
-  WAGE_PER_HOUR = 20
-
+  # WAGE_PER_HOUR = 20
+  def __init__(self,wage,days,hours):
+    self.WAGE_PER_HOUR=wage
+    self.MAX_DAYS=days
+    self.MAX_HOUR=hours
 
   def check_employee_status(self):
     """
@@ -84,15 +87,21 @@ class EmployeeWage:
           hours += self.PART_TIME_HOUR
         days += 1
 
-    if hours == 104:  # rare case
-      hours -= 4
-      monthly_wage -= 4 * self.WAGE_PER_HOUR  # or 2000 it's the same
+    # if hours == 104:  # rare case
+    #   hours -= 4
+    #   monthly_wage -= 4 * self.WAGE_PER_HOUR  # or 2000 it's the same
 
     return monthly_wage, days, hours
 
 def main():
-  employee_wage = EmployeeWage()
-  monthly_wage, days, hours = employee_wage.calculate_monthly_wage()
+  apexon = EmployeeWage(100,20,100)
+  monthly_wage, days, hours = apexon.calculate_monthly_wage()
+  print(f"Company name: Apexon")
+  print(f"Days present: {days}\nHours: {hours}\nMonthly wage: {monthly_wage}")
+
+  infostrech = EmployeeWage(1000,20,100)
+  monthly_wage, days, hours = infostrech.calculate_monthly_wage()
+  print(f"\nCompany name: Infostrech")
   print(f"Days present: {days}\nHours: {hours}\nMonthly wage: {monthly_wage}")
 
 if __name__ == "__main__":
