@@ -7,6 +7,14 @@
 """
 import random
 
+MAX_HOUR = 100
+MAX_DAYS = 20
+FULL_TIME_HOUR = 8
+PART_TIME_HOUR = 4
+WAGE_PER_HOUR = 20
+
+
+
 def check_employee_status():
   """
   Description:
@@ -33,7 +41,7 @@ def check_employee_status():
     return "Part-time"
 
     print("Employee is full time")
-def daily_wage():
+def cal_daily_wage():
   """
   Description:
     This function calculat daily wage
@@ -45,17 +53,15 @@ def daily_wage():
     daily_wage(int):calculated daily wage by formula
   """
 
-  wage_per_hour = 20
-  full_day_hour = 8
-  part_day_hour = 4
+
   daily_wage = 0
 
   status = check_employee_status()
   match status:
     case "Full-time":
-      daily_wage = full_day_hour * wage_per_hour
+      daily_wage = FULL_TIME_HOUR * WAGE_PER_HOUR
     case "Part-time":
-      daily_wage = part_day_hour * wage_per_hour
+      daily_wage = PART_TIME_HOUR * WAGE_PER_HOUR
     case _:
       daily_wage = 0
   return daily_wage
@@ -71,14 +77,29 @@ def calculate_monthly_wage():
   Returns:
     monthly_wage(int):calculated daily wage by formula
   """
-  month_days = 20 #20 days
+  hours = 0
+  days = 0 
   monthly_wage = 0
-  for _ in range(month_days):
-    monthly_wage+=daily_wage()
-  return monthly_wage
+  while days<MAX_DAYS and hours<MAX_HOUR:
+    daily_wage = cal_daily_wage()
+    monthly_wage+=daily_wage
+
+    if daily_wage>0:
+      if(daily_wage == FULL_TIME_HOUR * WAGE_PER_HOUR):
+        hours+=FULL_TIME_HOUR
+      elif(daily_wage == PART_TIME_HOUR * WAGE_PER_HOUR):
+        hours+=PART_TIME_HOUR
+      days+=1
+
+  if hours==104:#rare case
+    hours-=4
+    monthly_wage-=4*WAGE_PER_HOUR #or 2000 its same
+
+  return monthly_wage,days,hours
 
 def main():
-  print("Employee monthly wage is : ",calculate_monthly_wage())
+  monthly_wage,days,hours = calculate_monthly_wage()
+  print(f"Days present : {days}\nHours :{hours}\nMonthly wage :{monthly_wage}")
 
 if __name__=="__main__":
   main()
