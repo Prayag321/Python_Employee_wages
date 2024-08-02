@@ -3,15 +3,15 @@
   @Date: 31-07-2024 
   @Last Modified by: Prayag Bhoir
   @Last Modified time: 31-07-2024 
-  @Title : Employee Wage
+  @Title : Employee Wage uc8
 """
 import random
+FULL_TIME_HOUR = 8
+PART_TIME_HOUR = 4
 
 class EmployeeWage:
   # MAX_HOUR = 100
   # MAX_DAYS = 20
-  FULL_TIME_HOUR = 8
-  PART_TIME_HOUR = 4
   # WAGE_PER_HOUR = 20
   def __init__(self,wage,days,hours):
     self.WAGE_PER_HOUR=wage
@@ -39,7 +39,7 @@ class EmployeeWage:
     elif status == 2:
       return "Part-time"
 
-  def cal_daily_wage(self):
+  def cal_daily_wage(self,FULL_TIME_HOUR,PART_TIME_HOUR):
     """
     Description:
       This function calculates the daily wage
@@ -54,14 +54,14 @@ class EmployeeWage:
     status = self.check_employee_status()
     match status:
       case "Full-time":
-        daily_wage = self.FULL_TIME_HOUR * self.WAGE_PER_HOUR
+        daily_wage = FULL_TIME_HOUR * self.WAGE_PER_HOUR
       case "Part-time":
-        daily_wage = self.PART_TIME_HOUR * self.WAGE_PER_HOUR
+        daily_wage = PART_TIME_HOUR * self.WAGE_PER_HOUR
       case _:
         daily_wage = 0
     return daily_wage
 
-  def calculate_monthly_wage(self):
+  def calculate_monthly_wage(self,FULL_TIME_HOUR,PART_TIME_HOUR):
     hours = 0
     days = 0
     monthly_wage = 0
@@ -77,14 +77,14 @@ class EmployeeWage:
       monthly_wage(int): Calculated monthly wage by formula
     """
     while days < self.MAX_DAYS and hours < self.MAX_HOUR:
-      daily_wage = self.cal_daily_wage()
+      daily_wage = self.cal_daily_wage(FULL_TIME_HOUR,PART_TIME_HOUR)
       monthly_wage += daily_wage
 
       if daily_wage > 0:
-        if daily_wage == self.FULL_TIME_HOUR * self.WAGE_PER_HOUR:
-          hours += self.FULL_TIME_HOUR
-        elif daily_wage == self.PART_TIME_HOUR * self.WAGE_PER_HOUR:
-          hours += self.PART_TIME_HOUR
+        if daily_wage == FULL_TIME_HOUR * self.WAGE_PER_HOUR:
+          hours += FULL_TIME_HOUR
+        elif daily_wage == PART_TIME_HOUR * self.WAGE_PER_HOUR:
+          hours += PART_TIME_HOUR
         days += 1
 
     # if hours == 104:  # rare case
@@ -95,12 +95,12 @@ class EmployeeWage:
 
 def main():
   apexon = EmployeeWage(100,20,100)
-  monthly_wage, days, hours = apexon.calculate_monthly_wage()
+  monthly_wage, days, hours = apexon.calculate_monthly_wage(FULL_TIME_HOUR,PART_TIME_HOUR)
   print(f"Company name: Apexon")
   print(f"Days present: {days}\nHours: {hours}\nMonthly wage: {monthly_wage}")
 
   infostrech = EmployeeWage(1000,20,100)
-  monthly_wage, days, hours = infostrech.calculate_monthly_wage()
+  monthly_wage, days, hours = infostrech.calculate_monthly_wage(FULL_TIME_HOUR,PART_TIME_HOUR)
   print(f"\nCompany name: Infostrech")
   print(f"Days present: {days}\nHours: {hours}\nMonthly wage: {monthly_wage}")
 
