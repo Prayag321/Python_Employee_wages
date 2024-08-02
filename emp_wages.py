@@ -1,10 +1,3 @@
-"""
-  @Author: Prayag Bhoir
-  @Date: 2-07-2024 
-  @Last Modified by: Prayag Bhoir
-  @Last Modified time: 2-07-2024 
-  @Title : Employee Wage uc8
-"""
 import random
 
 class CompanyEmpWage:
@@ -25,12 +18,11 @@ class CompanyEmpWage:
     self.wage_per_hour = wage_per_hour
     self.max_days = max_days
     self.max_hours = max_hours
-    self.employees = {}  # dict to store employee details
+    self.employees = {}  # Dictionary to store employee details
 
   def add_employee(self, employee_name):
     """
-    Description:
-      Adds an employee to the company.
+    Adds an employee to the company.
 
     Parameters:
       employee_name (str): The name of the employee to be added.
@@ -49,8 +41,7 @@ class CompanyEmpWage:
 
   def remove_employee(self, employee_name):
     """
-    Description:
-      Removes an employee from the company.
+    Removes an employee from the company.
 
     Parameters:
       employee_name (str): The name of the employee to be removed.
@@ -65,9 +56,8 @@ class CompanyEmpWage:
 
   def check_employee_status(self):
     """
-    Description:
-      Simulates checking whether an employee is present or absent using a random number generator.
-      The function randomly determines the employee's status as either 'Absent', 'Full-time', or 'Part-time'.
+    Simulates checking whether an employee is present or absent using a random number generator.
+    The function randomly determines the employee's status as either 'Absent', 'Full-time', or 'Part-time'.
 
     Parameters:
       None
@@ -86,8 +76,7 @@ class CompanyEmpWage:
 
   def cal_daily_wage(self, status):
     """
-    Description:
-      This function calculates the daily wage
+    This function calculates the daily wage.
 
     Parameters:
       status (str): The status of the employee (e.g., 'Full-time', 'Part-time', 'Absent').
@@ -107,14 +96,13 @@ class CompanyEmpWage:
 
   def calculate_monthly_wage(self):
     """
-    Description:
-      This function calculates the monthly wage
+    Calculates the monthly wage for all employees in the company.
 
     Parameters:
       None
 
     Returns:
-      monthly_wage(int): Calculated monthly wage by formula
+      int: The total wage for all employees in the company.
     """
     total_wage = 0
     for employee in self.employees:
@@ -146,8 +134,7 @@ class CompanyEmpWage:
 
   def display_wage_details(self):
     """
-    Description:
-      Displays the total wage details for the company, including the total days worked, total hours worked, and the total monthly wage.
+    Displays the wage details for the company, including the total days worked, total hours worked, and the total monthly wage.
 
     Parameters:
       None
@@ -166,6 +153,7 @@ class CompanyEmpWage:
       print(f"  Monthly wage: {details['total_wage']}")
       print()
 
+
 class EmpWageBuilder:
   def __init__(self):
     """
@@ -175,8 +163,7 @@ class EmpWageBuilder:
 
   def add_company(self, company_name, wage_per_hour, max_days, max_hours):
     """
-    Description:
-      Adds a new company's wage details to the builder.
+    Adds a new company's wage details to the builder.
 
     Parameters:
       company_name (str): The name of the company.
@@ -191,26 +178,37 @@ class EmpWageBuilder:
     self.company_list.append(company)
     return company
 
-  def calculate_wages_for_all_companies(self):
+  def remove_company(self, company_name):
     """
-    Description:
-      Calculates the monthly wage for all companies in the list.
-      Calls the calculate_monthly_wage method for each CompanyEmpWage instance in the list.
+    Removes a company from the builder.
 
     Parameters:
-      None
+      company_name (str): The name of the company to be removed.
 
     Returns:
       None
     """
+    self.company_list = [company for company in self.company_list if company.company_name != company_name]
+
+  def get_company(self, company_name):
+    """
+    Retrieves a company by name.
+
+    Parameters:
+      company_name (str): The name of the company.
+
+    Returns:
+      CompanyEmpWage: The CompanyEmpWage object if found, otherwise None.
+    """
     for company in self.company_list:
-      company.calculate_monthly_wage()
+      if company.company_name == company_name:
+        return company
+    print(f"Company '{company_name}' does not exist.")
+    return None
 
   def display_all_wage_details(self):
     """
-    Description:
-      Displays the wage details for all companies in the list.
-      Calls the display_wage_details method for each CompanyEmpWage instance in the list.
+    Displays the wage details for all companies in the list.
 
     Parameters:
       None
@@ -221,27 +219,61 @@ class EmpWageBuilder:
     for company in self.company_list:
       company.display_wage_details()
 
+
 def main():
   emp_wage_builder = EmpWageBuilder()
 
-  # adding companies to EmpWageBuilder
-  apexon = emp_wage_builder.add_company("Apexon", 100, 20, 100)
-  infostrech = emp_wage_builder.add_company("Infostrech", 1000, 20, 100)
-
-  # adding employees
-  apexon.add_employee("Alice")
-  apexon.add_employee("Bob")
-  infostrech.add_employee("Charlie")
-  infostrech.add_employee("Diana")
-
-  # removing an employee
-  apexon.remove_employee("Bob")
-
-  # calculate wages for all companies
-  emp_wage_builder.calculate_wages_for_all_companies()
-
-  # display wage details for all companies
-  emp_wage_builder.display_all_wage_details()
+  while True:
+    print("\n1. Add Company")
+    print("2. Remove Company")
+    print("3. Add Employee")
+    print("4. Remove Employee")
+    print("5. Display All Wages")
+    print("6. Exit")
+    
+    choice = input("Enter your choice: ")
+    
+    match choice:
+      case "1":
+        company_name = input("Enter company name: ")
+        wage_per_hour = int(input("Enter wage per hour: "))
+        max_days = int(input("Enter maximum number of days: "))
+        max_hours = int(input("Enter maximum number of hours: "))
+        emp_wage_builder.add_company(company_name, wage_per_hour, max_days, max_hours)
+        print(f"Company '{company_name}' added.")
+        
+      case "2":
+        company_name = input("Enter company name to remove: ")
+        emp_wage_builder.remove_company(company_name)
+        print(f"Company '{company_name}' removed.")
+        
+      case "3":
+        company_name = input("Enter company name to add employee to: ")
+        company = emp_wage_builder.get_company(company_name)
+        if company:
+          num_employees = int(input("Enter number of employees to add: "))
+          for _ in range(num_employees):
+            employee_name = input("Enter employee name: ")
+            company.add_employee(employee_name)
+            print(f"Employee '{employee_name}' added to company '{company_name}'.")
+        
+      case "4":
+        company_name = input("Enter company name to remove employee from: ")
+        company = emp_wage_builder.get_company(company_name)
+        if company:
+          employee_name = input("Enter employee name to remove: ")
+          company.remove_employee(employee_name)
+          print(f"Employee '{employee_name}' removed from company '{company_name}'.")
+        
+      case "5":
+        emp_wage_builder.display_all_wage_details()
+        
+      case "6":
+        print("Exiting...")
+        break
+        
+      case _:
+        print("Invalid choice. Please enter a number between 1 and 6.")
 
 if __name__ == "__main__":
   main()
