@@ -176,6 +176,7 @@ class EmpWageBuilder:
     """
     company = CompanyEmpWage(company_name, wage_per_hour, max_days, max_hours)
     self.company_list.append(company)
+    print(f"Company '{company_name}' added.")
     return company
 
   def remove_company(self, company_name):
@@ -188,8 +189,12 @@ class EmpWageBuilder:
     Returns:
       None
     """
-    self.company_list = [company for company in self.company_list if company.company_name != company_name]
-
+    company_exists = any(company.company_name == company_name for company in self.company_list)
+    if company_exists:
+      self.company_list = [company for company in self.company_list if company.company_name != company_name]
+      print(f"Company '{company_name}' removed.")
+    else:
+      print(f"Company '{company_name}' does not exist.")
   def get_company(self, company_name):
     """
     Retrieves a company by name.
@@ -240,12 +245,12 @@ def main():
         max_days = int(input("Enter maximum number of days: "))
         max_hours = int(input("Enter maximum number of hours: "))
         emp_wage_builder.add_company(company_name, wage_per_hour, max_days, max_hours)
-        print(f"Company '{company_name}' added.")
+        # print(f"Company '{company_name}' added.")
         
       case "2":
         company_name = input("Enter company name to remove: ")
         emp_wage_builder.remove_company(company_name)
-        print(f"Company '{company_name}' removed.")
+        # print(f"Company '{company_name}' removed.")
         
       case "3":
         company_name = input("Enter company name to add employee to: ")
