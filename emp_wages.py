@@ -221,6 +221,7 @@ class EmpWageBuilder:
     Returns:
       None
     """
+    
     for company in self.company_list:
       company.display_wage_details()
 
@@ -241,26 +242,39 @@ def main():
     match choice:
       case "1":
         company_name = input("Enter company name: ")
-        wage_per_hour = int(input("Enter wage per hour: "))
-        max_days = int(input("Enter maximum number of days: "))
-        max_hours = int(input("Enter maximum number of hours: "))
-        emp_wage_builder.add_company(company_name, wage_per_hour, max_days, max_hours)
+        try:
+          wage_per_hour = int(input("Enter wage per hour: "))
+          max_days = int(input("Enter maximum number of days: "))
+          max_hours = int(input("Enter maximum number of hours: "))
+          emp_wage_builder.add_company(company_name, wage_per_hour, max_days, max_hours)
+        except:
+          print("Invalid Input")
         # print(f"Company '{company_name}' added.")
         
       case "2":
-        company_name = input("Enter company name to remove: ")
-        emp_wage_builder.remove_company(company_name)
+        if len(emp_wage_builder.company_list) == 0:
+          print("Number of company is zero. Add new company first.")
+        else:
+          print("Registered companies: ",[company.company_name for company in emp_wage_builder.company_list]) 
+          company_name = input("Enter company name to remove: ")
+          emp_wage_builder.remove_company(company_name)
         # print(f"Company '{company_name}' removed.")
         
       case "3":
         company_name = input("Enter company name to add employee to: ")
         company = emp_wage_builder.get_company(company_name)
-        if company:
+        try:
           num_employees = int(input("Enter number of employees to add: "))
+          if num_employees < 0:
+              print("Number of employees must be a non-negative integer.")
+              continue
+          
           for _ in range(num_employees):
-            employee_name = input("Enter employee name: ")
-            company.add_employee(employee_name)
-            print(f"Employee '{employee_name}' added to company '{company_name}'.")
+              employee_name = input("Enter employee name: ")
+              company.add_employee(employee_name)
+              print(f"Employee '{employee_name}' added to company '{company_name}'.")
+        except ValueError:
+            print("Invalid number of employees. Please enter a valid integer.")
         
       case "4":
         company_name = input("Enter company name to remove employee from: ")
