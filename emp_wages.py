@@ -1,3 +1,10 @@
+"""
+    @Author: Prayag Bhoir
+    @Date: 30-07-2024 
+    @Last Modified by: Prayag Bhoir
+    @Last Modified time: 31-07-2024 
+    @Title : Employee wage problem
+"""
 import random
 
 class CompanyEmpWage:
